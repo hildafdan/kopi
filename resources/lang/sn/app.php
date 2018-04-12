@@ -1,0 +1,40 @@
+<?php
+
+return [
+    // Labels
+    'my_profile'        => 'Profil Abdi',
+    'search'            => 'Pilarian',
+    'unknown'           => 'Teu Dikenal',
+    'male'              => 'Pameget',
+    'female'            => 'Istri',
+    'male_code'         => 'P',
+    'female_code'       => 'I',
+    'family_chart'      => 'Skema Kulawarga',
+    'family_tree'       => 'Tangkal Kulawarga',
+    'child_count'       => 'Jumlah Budak',
+    'grand_child_count' => 'Jumlah Incu',
+    'user_found'        => 'Pamaké kapendak : <strong>:total Jalmi</strong> pikeun kecap konci : <strong>:keyword</strong>',
+    'search_your_family' => 'Pilarian Kulawarga',
+    'relationship_calculator' => 'Ngitung Hubungan',
+    'search_your_family_placeholder' => 'Lebetkeun nami/nénéhan... klik Pilarian',
+    'example'           => 'Conto:',
+    'address'           => 'Alamat',
+    'contact'           => 'Kontak',
+    'city'              => 'Kota',
+    'phone'             => 'Telp.',
+    'login_account'     => 'Akun Lebet',
+    'childs_were_not_recorded' => 'Barudak teu acan kacatet.',
+
+    // Actions
+    'edit'              => 'Ngarobah',
+    'update'            => 'Ngaropéa',
+    'show_profile'      => 'Profil',
+    'show_family_chart' => 'Bagan Kulawarga',
+    'show_family_tree'  => 'Tangkal Kulawarga',
+    'enter_new_name'    => 'Lebetkeun Nami Anyar...',
+    'select_from_existing_males'   => 'Milih tina Pameget na daptar',
+    'select_from_existing_females' => 'Milih tina Istri na daptar',
+    'select_from_existing_couples' => 'Milih Pasangan Pernikahan',
+    'delete'            => 'Mupus',
+    'cancel'            => 'Ngabatalkeun',
+];
