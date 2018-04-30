@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     public $listKeluarga=[];
+    
     /**
      * Search user by keyword.
      *
