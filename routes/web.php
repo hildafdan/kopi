@@ -50,5 +50,4 @@ Route::post('backups/{fileName}/restore', ['as'=>'backups.restore', 'uses'=>'Bac
 Route::get('backups/{fileName}/dl', ['as'=>'backups.download', 'uses'=>'BackupsController@download']);
 Route::resource('backups','BackupsController');
 
-Route::get('root/{user}', 'UsersController@searchRoot');
-Route::get('list/{user}', 'UsersController@familyList');
+// Route::get('root/{user}', 'UsersController@searchRoot');
