@@ -16,7 +16,7 @@
 
 {{ Form::close() }}
 
-@if (request('head', 'tail'))
+@if (request('h'))
 <br>
 {{ $users->appends(Request::except('page'))->render() }}
 @foreach ($users->chunk(4) as $chunkedUser)

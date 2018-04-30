@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    public $listKeluarga=[];
     /**
      * Search user by keyword.
      *
@@ -130,6 +131,8 @@ class UsersController extends Controller
             'password'  => 'nullable|min:6|max:15',
         ]);
 
+        
+
         $user->nickname = $request->nickname;
         $user->name = $request->get('name');
         $user->gender_id = $request->get('gender_id');
@@ -163,18 +166,34 @@ class UsersController extends Controller
 
     public function bfs(Request $request)
     {
-        $h = $request->get('h');
-        $t = $request->get('t');
-        // $users = [];
+        $h = $request->get('head');
+        $t = $request->get('tail');
 
-        // if ($q) {
-        //     $users = User::with('father', 'mother')->where(function ($query) use ($q) {
-        //         $query->where('name', 'like', '%'.$q.'%');
-        //         $query->orWhere('nickname', 'like', '%'.$q.'%');
-        //     })
-        //     ->paginate(24);
-        // }
+        if ($h and $t) {
+            $users1=User::where('nickname', '=', $h)->get();
+            $this->searchRoot($users1[0]);
+
+            echo "<br>";
+
+            $users2=User::where('nickname', '=', $t)->get();
+            $this->searchRoot($users2[0]);
+        }
 
         return view('users.bfs', compact('users'));
+    }
+
+    public function searchRoot(User $user){
+        // $users[];
+        // array_push($listKeluarga,[$user->name,$user->father_id,$user->mother_id]);
+        echo $user->name." -- ";
+        
+        if($user->father_id!=null){
+            $user1 = $user->where('id', $user->father_id)->get();
+            $this->searchRoot($user1[0]);
+        }
+        if($user->mother_id!=null){
+            $user2 = $user->where('id', $user->mother_id)->get();
+            $this->searchRoot($user2[0]);
+        }
     }
 }
