@@ -33,7 +33,6 @@ Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
 
 Route::get('users/{user}/marriages', 'UserMarriagesController@index')->name('users.marriages');
 Route::get('bfs', 'UsersController@bfs')->name('users.bfs');
-Route::get('bfs-proses', 'UsersController@bfs_proses')->name('users.bfs_proses');
 
 /**
  * Couple/Marriages Routes
@@ -50,4 +49,4 @@ Route::post('backups/{fileName}/restore', ['as'=>'backups.restore', 'uses'=>'Bac
 Route::get('backups/{fileName}/dl', ['as'=>'backups.download', 'uses'=>'BackupsController@download']);
 Route::resource('backups','BackupsController');
 
-// Route::get('root/{user}', 'UsersController@searchRoot');
+Route::get('root/{user}', 'UsersController@searchRoot');

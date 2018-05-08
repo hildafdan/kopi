@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    public $listNeighbors=[];
+    public $heuristic=0;
+    public $cost=1;
+    //public $prev;
 
     /**
      * The attributes that are mass assignable.
