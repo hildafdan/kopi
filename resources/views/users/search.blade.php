@@ -3,7 +3,7 @@
 @section('content')
 <h2 class="page-header">
     {{ trans('app.search_your_family') }}
-    @if (request('head' and 'tail'))
+    @if (request('q'))
     <small class="pull-right">{!! trans('app.user_found', ['total' => $users->total(), 'keyword' => request('q')]) !!}</small>
     @endif
 </h2>

@@ -177,38 +177,39 @@ class UsersController extends Controller
         $t = $request->get('tail');
 
         if ($h and $t) {
-            $users1=User::where('nickname', '=', $h)->get();
-            $this->searchRoot($users1[0]);
-            $this->head = $users1[0];
+            $u1=User::where('nickname', $h)->exists();
+            $u2=User::where('nickname', $t)->exists();
 
-            echo "<br>";
+            if(($u1 == true) and ($u2 == true)) {
+                $users1=User::where('nickname', '=', $h)->get();
+                $users2=User::where('nickname', '=', $t)->get();
+                $this->searchRoot($users1[0]);
+                $this->head = $users1[0];
 
-            $users2=User::where('nickname', '=', $t)->get();
-            $this->searchRoot2($users2[0]);
-            $this->tail=$users2[0];
+                echo "<br>";
 
-            $this->matchRoot();
-            
-            if($this->root != null) {
-                 $this->buildGraph($this->root);
-                $this->defineNeighbor();
-                // $this->getHeuristic();
-                $this->pathFinding();
+                $this->searchRoot2($users2[0]);
+                $this->tail=$users2[0];
+
+                $this->matchRoot();
+                
+                if($this->root != null) {
+                     $this->buildGraph($this->root);
+                    $this->defineNeighbor();
+                    // $this->getHeuristic();
+                    $this->pathFinding();
+                }
+                else
+                    return view('users.bfs2');
             }
             else
-                return view('users.bfs');
+                return view('users.bfs2');
         }
-        // dd($this->listFamily1, $this->listFamily2);
-
-
         return view('users.bfs', compact('users'));
     }
 
     public function searchRoot(User $user){
-        // $users[];
-        // array_push($listKeluarga,[$user->name,$user->father_id,$user->mother_id]);
         $this->listFamily1 = array_prepend($this->listFamily1, $user);
-        // echo $user->name." -- ";
         
         if($user->father_id!=null){
             $user1 = $user->where('id', $user->father_id)->get();
@@ -221,10 +222,7 @@ class UsersController extends Controller
     }
 
     public function searchRoot2(User $user){
-        // $users[];
-        // array_push($listKeluarga,[$user->name,$user->father_id,$user->mother_id]);
         $this->listFamily2 = array_prepend($this->listFamily2, $user);
-        // echo $user->name." -- ";
         
         if($user->father_id!=null){
             $user1 = $user->where('id', $user->father_id)->get();
