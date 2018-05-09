@@ -16,7 +16,7 @@
 
 {{ Form::close() }}
 
-@if (request('h'))
+<!-- @if (request('q'))
 <br>
 {{ $users->appends(Request::except('page'))->render() }}
 @foreach ($users->chunk(4) as $chunkedUser)
@@ -28,6 +28,6 @@
 @endforeach
 
 {{ $users->appends(Request::except('page'))->render() }}
-@endif
+@endif -->
 @endsection
 

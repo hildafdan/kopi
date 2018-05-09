@@ -188,11 +188,15 @@ class UsersController extends Controller
             $this->tail=$users2[0];
 
             $this->matchRoot();
-            $userRoot = User::where('nickname', '=', $this->root)->get();
-            $this->buildGraph($userRoot[0]);
-            $this->defineNeighbor();
-            // $this->getHeuristic();
-            $this->pathFinding();
+            
+            if($this->root != null) {
+                 $this->buildGraph($this->root);
+                $this->defineNeighbor();
+                // $this->getHeuristic();
+                $this->pathFinding();
+            }
+            else
+                return view('users.bfs');
         }
         // dd($this->listFamily1, $this->listFamily2);
 
@@ -203,7 +207,7 @@ class UsersController extends Controller
     public function searchRoot(User $user){
         // $users[];
         // array_push($listKeluarga,[$user->name,$user->father_id,$user->mother_id]);
-        $this->listFamily1 = array_prepend($this->listFamily1, $user->name);
+        $this->listFamily1 = array_prepend($this->listFamily1, $user);
         // echo $user->name." -- ";
         
         if($user->father_id!=null){
@@ -219,7 +223,7 @@ class UsersController extends Controller
     public function searchRoot2(User $user){
         // $users[];
         // array_push($listKeluarga,[$user->name,$user->father_id,$user->mother_id]);
-        $this->listFamily2 = array_prepend($this->listFamily2, $user->name);
+        $this->listFamily2 = array_prepend($this->listFamily2, $user);
         // echo $user->name." -- ";
         
         if($user->father_id!=null){
