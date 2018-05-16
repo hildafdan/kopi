@@ -13,7 +13,7 @@ Aplikasi silsilah keluarga untuk mempermudah pendataan keluarga kita.
 2. Melihat data ahli waris
 
 ## Fitur
-Aplikasi ini menggunakan Bahasa Indonesia dan Bahasa Inggris, diatur pada `config.locale`.
+Aplikasi ini menggunakan Bahasa Indonesia dan Bahasa Sunda, diatur pada `config.locale`.
 
 ### Konsep
 1. Satu orang memiliki satu ayah (belum sebagai tentu orang tua)

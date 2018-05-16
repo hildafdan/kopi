@@ -11,7 +11,7 @@
 Genealogy (Silsilah) application to record our family members.
 
 ## Features
-This application uses Bahasa Indonesia and English based on `config.locale`.
+This application uses Bahasa Indonesia and Sundanese based on `config.locale`.
 
 ### Logic Concept
 1. A person can have one father
