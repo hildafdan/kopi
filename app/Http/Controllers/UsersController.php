@@ -210,7 +210,6 @@ class UsersController extends Controller
                     $pathfinding->start = $this->start;
                     $pathfinding->target = $this->target;
                     $pathfinding->root = $this->rootNode;
-                    $pathfinding->isReversed = $this->isReversed;
                     $pathfinding->getHeuristic();
                 }
             }
