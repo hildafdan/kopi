@@ -2,8 +2,6 @@
 
 <h1 align="center">Genealogy Application</h1>
 
-[![Build Status](https://travis-ci.org/nafiesl/silsilah.svg?branch=master)](https://travis-ci.org/nafiesl/silsilah)
-
 > **Development in progress**  
 > In development progress, any changes of table structure **will be updated** directly to corresponding **migration file**.
 >
@@ -40,16 +38,9 @@ This application uses Bahasa Indonesia and English based on `config.locale`.
 7. Phone Number
 8. Email
 
-### Couple Attribute (TODO)
-1. Husband
-2. Wife
-3. Marriage Date
-4. Divorce Date
-5. Address
-
 ## How to Install
-1. Clone the repo : `git clone https://github.com/nafiesl/silsilah.git`
-2. `cd silsilah`
+1. Clone the repo : `git clone https://github.com/hildafdan/kopi.git`
+2. `cd kopi`
 3. `composer install`
 4. `cp .env.example .env`
 5. `php artisan key:generate`
@@ -69,27 +60,6 @@ $ vendor/bin/phpunit
 Feel free to submit Issue for bugs or sugestions and Pull Request.
 
 ## Screenshots
-
-#### Family Tree
-![Family Tree](public/images/02-pohon-keluarga.jpg "Family Tree")
-
-#### Family Chart
-![Family Chart](public/images/03-bagan-keluarga.jpg "Family Chart")
-
-#### Search Family Member
-![Search Family Member](public/images/01-cari-keluarga.jpg "Search Family Member")
-
-#### User Profile
-![User Profile](public/images/04-profil.jpg "User Profile")
-
-#### Profile Form
-![Profile Form](public/images/05-form-profil.jpg "Profile Form")
-
-#### Profil Edit Form
-![Profil Edit Form](public/images/06-edit-profil.jpg "Profil Edit Form")
-
-#### Automated Testing
-![Automated Testing](public/images/07-automated-testing.jpg "Automated Testing")
 
 ## License
 The Laravel framework is open-sourced software licensed under the [MIT license](LICENSE).

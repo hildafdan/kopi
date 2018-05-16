@@ -30,7 +30,6 @@
                 <div class="panel-heading"><h3 class="panel-title">{{ trans('app.address') }} & {{ trans('app.contact') }}</h3></div>
                 <div class="panel-body">
                     {!! FormField::textarea('address', ['label' => trans('app.address')]) !!}
-                    {!! FormField::text('city', ['label' => trans('app.city'), 'placeholder' => trans('app.example').' Jakarta']) !!}
                     {!! FormField::text('phone', ['label' => trans('app.phone'), 'placeholder' => trans('app.example').' 081234567890']) !!}
                 </div>
             </div>

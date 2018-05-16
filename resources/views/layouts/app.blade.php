@@ -18,6 +18,7 @@
         margin-top: 0px;
     }
     </style>
+    <link href="{{asset('icon.ico')}}" rel="shortcut icon">
 </head>
 <body>
     <div id="app">

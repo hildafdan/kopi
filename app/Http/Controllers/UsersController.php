@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Couple;
 use App\User;
+use App\Node;
+use App\Pathfinding;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -13,14 +15,23 @@ class UsersController extends Controller
     public $listFamily1=[];
     public $listFamily2=[];
     public $root;
+    public $listUser=[];
+
+    //pathfinding
     public $listNode=[];
+    public $start;
+    public $target;
+    public $rootNode;
+
+    //handling
+    public $isReversed = false;
 
     /**
      * Search user by keyword.
      *
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search(Request $request, User $user)
     {
         $q = $request->get('q');
         $users = [];
@@ -34,7 +45,7 @@ class UsersController extends Controller
             ->paginate(24);
         }
 
-        return view('users.search', compact('users'));
+        return view('users.search', compact('users', 'user'));
     }
 
     /**
@@ -133,7 +144,6 @@ class UsersController extends Controller
             'dod'       => 'nullable|date|date_format:Y-m-d',
             'phone'     => 'nullable|string|max:255',
             'address'   => 'nullable|string|max:255',
-            'city'      => 'nullable|string|max:255',
             'email'     => 'nullable|string|max:255',
             'password'  => 'nullable|min:6|max:15',
         ]);
@@ -148,7 +158,6 @@ class UsersController extends Controller
 
         $user->phone = $request->get('phone');
         $user->address = $request->get('address');
-        $user->city = $request->get('city');
         $user->email = $request->get('email');
 
         if ($request->get('email')) {
@@ -171,22 +180,21 @@ class UsersController extends Controller
         //
     }
 
-    public function bfs(Request $request)
+    public function bfs(Request $request, User $user)
     {
         $h = $request->get('head');
         $t = $request->get('tail');
+        $pathfinding = new Pathfinding();
 
         if ($h and $t) {
-            $u1=User::where('nickname', $h)->exists();
-            $u2=User::where('nickname', $t)->exists();
+            $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
+            $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
 
             if(($u1 == true) and ($u2 == true)) {
-                $users1=User::where('nickname', '=', $h)->get();
-                $users2=User::where('nickname', '=', $t)->get();
+                $users1=User::where('nickname', '=', $h)->orWhere('name', '=', $h)->get();
+                $users2=User::where('nickname', '=', $t)->orWhere('name', '=', $t)->get();
                 $this->searchRoot($users1[0]);
                 $this->head = $users1[0];
-
-                echo "<br>";
 
                 $this->searchRoot2($users2[0]);
                 $this->tail=$users2[0];
@@ -194,18 +202,25 @@ class UsersController extends Controller
                 $this->matchRoot();
                 
                 if($this->root != null) {
-                     $this->buildGraph($this->root);
+                    $this->buildGraph($this->root, 0);
+                    $this->defineGraph();   
                     $this->defineNeighbor();
-                    // $this->getHeuristic();
-                    $this->pathFinding();
+
+                    $pathfinding->listNode = $this->listNode;
+                    $pathfinding->start = $this->start;
+                    $pathfinding->target = $this->target;
+                    $pathfinding->root = $this->rootNode;
+                    $pathfinding->isReversed = $this->isReversed;
+                    $pathfinding->getHeuristic();
                 }
                 else
-                    return view('users.bfs2');
+                    return view('users.bfs2', compact('user'));
             }
             else
-                return view('users.bfs2');
+                return view('users.bfs2', compact('user'));
         }
-        return view('users.bfs', compact('users'));
+        $lno = $pathfinding->pathList;
+        return view('users.bfs', compact('users', 'user', 'lno', 'users1', 'users2'));
     }
 
     public function searchRoot(User $user){
@@ -244,133 +259,67 @@ class UsersController extends Controller
         }
     }
 
-    public function buildGraph(User $user){
-        $this->listNode = array_prepend($this->listNode, $user);
+     public function buildGraph(User $user, int $level){
+        $user->level = $level;
+        $this->listUser = array_prepend($this->listUser, $user);
         if ($user->childs->count() > 0){
+            $level++;
             foreach($user->childs as $child){
-                $this->buildGraph($child);
+                $this->buildGraph($child, $level);
             }
+        }
+    }
+
+    public function defineGraph () {
+        for ($i = 0; $i < count($this->listUser); $i++){
+            $this->listNode = array_prepend($this->listNode, new Node());
+        }
+        for ($i = 0; $i < count($this->listUser); $i++){   
+            $this->listNode[$i]->setId($this->listUser[$i]->id, $this->listUser[$i]->level, $this->listUser[$i]->name);
         }
     }
 
     public function defineNeighbor(){
         foreach($this->listNode as $value){
-            if($value->childs->count() > 0){
-                foreach ($value->childs as $child) {
-                    $value->listNeighbors = array_prepend($value->listNeighbors, $child);
-                }
+            if($value->id == $this->head->id){
+                $this->start = $value;
+            }
+            if($value->id == $this->tail->id){
+                $this->target = $value;
+            }
+            if($value->id == $this->root->id) {
+                $this->rootNode = $value;
             }
         }
 
-        foreach ($this->listNode as $value) {
-            if($value->father_id != null) {
-                foreach($this->listNode as $node) {
-                    if ($node->id == $value->father_id) {
-                        $value->listNeighbors = array_prepend($value->listNeighbors, $node);
+        for ($i = 0; $i < count($this->listUser); $i++){
+            if($this->listUser[$i]->childs->count() > 0){
+                for ($j = 0; $j < count($this->listUser[$i]->childs); $j++){
+                    foreach ($this->listNode as $key) {
+                        if($key->id == $this->listUser[$i]->childs[$j]->id){
+                            $this->listNode[$i]->addNeighbor($key);
+                        }
                     }
                 }
             }
-            if($value->mother_id != null) {
-                foreach($this->listNode as $node) {
-                    if ($node->id == $value->mother_id) {
-                        $value->listNeighbors = array_prepend($value->listNeighbors, $node);
+        }
+        for ($i = 0; $i < count($this->listUser); $i++){
+            if($this->listUser[$i]->father_id != null) {
+                for ($j = 0; $j < count($this->listUser); $j++){
+                    if ($this->listUser[$i]->father_id == $this->listUser[$j]->id) {
+                        $this->listNode[$i]->addNeighbor($this->listNode[$j]);
                     }
                 }
             }
         }
-
-        foreach ($this->listNode as $value) {
-            echo $value->name, " -- ";
-            // $this->tail = $value;
-            foreach($value->listNeighbors as $anak) {
-                echo $anak->name, " ++ ";
+        for ($i = 0; $i < count($this->listUser); $i++){
+            if($this->listUser[$i]->mother_id != null) {
+                for ($j = 0; $j < count($this->listUser); $j++){
+                    if ($this->listUser[$i]->mother_id == $this->listUser[$j]->id) {
+                        $this->listNode[$i]->addNeighbor($this->listNode[$j]);
+                    }
+                }
             }
-            echo "<br>";
         }
-        // dd($this->listNode);
-    }
-
-    // public function getHeuristic(){
-    //     foreach ($this->listNode as $end) {
-    //         if($end->id != $this->tail->id) {
-    //             foreach ($this->listNode as $value) {
-    //                 if($value->id != $this->tail->id) {
-    //                     $this->calHeuristic($value, $end);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     foreach ($this->listNode as $value) {
-    //         echo $value->name, "  ", $value->heuristic, "<br>";
-    //     }
-    //     // dd(end($this->listNode));
-    // }
-
-    // public function calHeuristic(User $current, User $end) {
-    //     $isFound=0;
-    //     $current->heuristic+=1;
-    //     foreach($end->listNeighbors as $neighbor) {
-    //         if($neighbor->id == $current->id) {
-    //             $isFound=1;
-    //         }
-    //     }
-    //     if ($isFound==0) {
-    //         foreach ($end->listNeighbors as $neighbor) {
-    //             $this->calHeuristic($current, $neighbor);   
-    //         }
-    //     }
-    // }
-
-    public function pathFinding (){
-        // $start;
-        // $finish;
-        // $temp;
-        // foreach($this->listNode as $node) {
-        //     if($node->id == $this->head->id){
-        //         $start = $node;
-        //         $temp = $node;
-        //     }
-        //     elseif ($node->id == $this->tail->id) {
-        //         $finish = $node;
-        //     }                
-        // }
-        // $openList=[];
-        // $openList = array_prepend($openList, $start);
-        // $closeList=[];
-        // while($openList != null){
-        //     $temp->cost = 999;
-        //     $index = 0;
-        //     $remove = 0;
-        //     foreach($openList as $node){
-        //         $index++;
-        //         if($node->cost < $temp->cost){
-        //             $temp=$node;
-        //             $remove=$index;
-        //         }
-        //     }
-        //     $current = $temp;
-
-        //     if($current->id == $finish->id){
-        //         echo "ketemu";
-        //     }
-
-        //     $closeList = array_prepend($closeList, $current);
-            // unset($openList[$remove]);
-
-            // foreach($current->listNeighbors as $neighbor){
-            //     // if(in_array($neighbor, $closeList)){
-            //     //     continue;
-            //     // }
-            //     $tempG = $current->cost + 1;
-            //     // if(in_array($neighbor, $openList) == false){
-            //     //     $openList = array_prepend($openList, $neighbor);
-            //     // }
-            //     // elseif($tempG >= $neighbor->cost) {
-            //     //     continue;
-            //     // }
-            //     $neighbor->cost = $tempG;
-            //     $neighbor->prev = $current;
-            // }
-        //}
     }
 }

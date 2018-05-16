@@ -55,34 +55,6 @@
                     @endcan
                 </td>
             </tr>
-            <tr>
-                <th class="col-sm-4">{{ trans('user.parent') }}</th>
-                <td class="col-sm-8">
-
-                    @can ('edit', $user)
-                    <div class="pull-right">
-                        @if (request('action') == 'set_parent')
-                            {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
-                        @else
-                            {{ link_to_route('users.show', trans('user.set_parent'), [$user->id, 'action' => 'set_parent'], ['class' => 'btn btn-link btn-xs']) }}
-                        @endif
-                    </div>
-                    @endcan
-
-                    @if ($user->parent)
-                    {{ $user->parent->husband->name }} & {{ $user->parent->wife->name }}
-                    @endif
-
-                    @can('edit', $user)
-                    @if (request('action') == 'set_parent')
-                    {{ Form::open(['route' => ['family-actions.set-parent', $user->id]]) }}
-                    {!! FormField::select('set_parent_id', $allMariageList, ['label' => false, 'value' => $user->parent_id, 'placeholder' => trans('app.select_from_existing_couples')]) !!}
-                    {{ Form::submit('update', ['class' => 'btn btn-info btn-sm', 'id' => 'set_parent_button']) }}
-                    {{ Form::close() }}
-                    @endif
-                    @endcan
-                </td>
-            </tr>
             @if ($user->gender_id == 1)
             <tr>
                 <th>{{ trans('user.wife') }}</th>
@@ -111,11 +83,8 @@
                         {!! FormField::select('set_wife_id', $femalePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_females')]) !!}
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     {{ Form::text('set_wife', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
-                                </div>
-                                <div class="col-md-5">
-                                    {{ Form::text('marriage_date', null, ['class' => 'form-control input-sm', 'placeholder' => trans('couple.marriage_date')]) }}
                                 </div>
                             </div>
                         </div>
@@ -153,11 +122,8 @@
                         {!! FormField::select('set_husband_id', $malePersonList, ['label' => false, 'placeholder' => trans('app.select_from_existing_males')]) !!}
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-12">
                                     {{ Form::text('set_husband', null, ['class' => 'form-control input-sm', 'placeholder' => trans('app.enter_new_name')]) }}
-                                </div>
-                                <div class="col-md-5">
-                                    {{ Form::text('marriage_date', null, ['class' => 'form-control input-sm', 'placeholder' => trans('couple.marriage_date')]) }}
                                 </div>
                             </div>
                         </div>

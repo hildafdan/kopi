@@ -8,10 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-    public $listNeighbors=[];
-    public $heuristic=0;
-    public $cost=1;
-    //public $prev;
+    public $level=0;
 
     /**
      * The attributes that are mass assignable.
@@ -115,10 +112,10 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'couples', 'husband_id', 'wife_id')->withPivot(['id'])->withTimestamps();
     }
 
-    public function addWife(User $wife, $marriageDate = null)
+    public function addWife(User $wife)
     {
         if ($this->gender_id == 1 && ! $this->hasBeenMarriedTo($wife)) {
-            $this->wifes()->save($wife, ['marriage_date' => $marriageDate]);
+            $this->wifes()->save($wife);
             return $wife;
         }
 
@@ -130,10 +127,10 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'couples', 'wife_id', 'husband_id')->withPivot(['id'])->withTimestamps();
     }
 
-    public function addHusband(User $husband, $marriageDate = null)
+    public function addHusband(User $husband)
     {
         if ($this->gender_id == 2 && ! $this->hasBeenMarriedTo($husband)) {
-            $this->husbands()->save($husband, ['marriage_date' => $marriageDate]);
+            $this->husbands()->save($husband);
             return $husband;
         }
 

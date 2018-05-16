@@ -36,7 +36,7 @@
             </div>
             <div class="panel-footer">
                 {{ link_to_route('users.show', trans('app.show_profile'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
-                {{ link_to_route('users.chart', trans('app.show_family_chart'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
+                {{ link_to_route('users.tree', trans('app.show_family_tree'), [$user->id], ['class' => 'btn btn-default btn-xs']) }}
             </div>
         </div>
     </div>

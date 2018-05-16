@@ -94,7 +94,6 @@ class FamilyActionsController extends Controller
         $this->validate($request, [
             'set_wife_id' => 'nullable',
             'set_wife' => 'required_without:set_wife_id|max:255',
-            'marriage_date' => 'nullable|date|date_format:Y-m-d',
         ]);
 
         if ($request->get('set_wife_id')) {
@@ -107,7 +106,7 @@ class FamilyActionsController extends Controller
             $wife->manager_id = auth()->id();
         }
 
-        $user->addWife($wife, $request->get('marriage_date'));
+        $user->addWife($wife);
 
         return back();
     }
@@ -117,7 +116,6 @@ class FamilyActionsController extends Controller
         $this->validate($request, [
             'set_husband_id' => 'nullable',
             'set_husband' => 'required_without:set_husband_id|max:255',
-            'marriage_date' => 'nullable|date|date_format:Y-m-d',
         ]);
 
         if ($request->get('set_husband_id')) {
@@ -130,7 +128,7 @@ class FamilyActionsController extends Controller
             $husband->manager_id = auth()->id();
         }
 
-        $user->addHusband($husband, $request->get('marriage_date'));
+        $user->addHusband($husband);
 
         return back();
     }
