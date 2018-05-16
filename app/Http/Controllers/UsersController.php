@@ -190,7 +190,7 @@ class UsersController extends Controller
             $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
             $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
 
-            if(($u1 == true) and ($u2 == true)) {
+            if($u1 and $u2) {
                 $users1=User::where('nickname', '=', $h)->orWhere('name', '=', $h)->get();
                 $users2=User::where('nickname', '=', $t)->orWhere('name', '=', $t)->get();
                 $this->searchRoot($users1[0]);
@@ -213,14 +213,10 @@ class UsersController extends Controller
                     $pathfinding->isReversed = $this->isReversed;
                     $pathfinding->getHeuristic();
                 }
-                else
-                    return view('users.bfs2', compact('user'));
             }
-            else
-                return view('users.bfs2', compact('user'));
         }
         $lno = $pathfinding->pathList;
-        return view('users.bfs', compact('users', 'user', 'lno', 'users1', 'users2'));
+        return view('users.bfs', compact('users', 'user', 'u1', 'u2', 'lno', 'users1', 'users2'));
     }
 
     public function searchRoot(User $user){
