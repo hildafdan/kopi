@@ -15,17 +15,17 @@
             {{ link_to_route('users.bfs', trans('app.relationship_calculator'), $user->id, 'Reset', [], ['class' => 'btn btn-default']) }}
         </span>
 </div>
-@if (!$u1 or !$u2)
+
+{{ Form::close() }}
+@if (request('head') and request('tail'))
+@if (!$u1 or !$u2 or !$checkRoot)
 <h2>
     <small class="pull-right">{!! trans('app.user_relation') !!}</small>
 </h2>
 @endif
-
-{{ Form::close() }}
-@if (request('head') and request('tail'))
 <br>
 	<div id="wrapper">
-		@foreach($lno as $value)
+		@foreach($trackResult as $value)
 		<div class="entry {{$value->name}}">
 			<span class="label" >
 				<font color="grey">{{$value->name}}</font>

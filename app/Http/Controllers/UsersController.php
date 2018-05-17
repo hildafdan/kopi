@@ -185,10 +185,11 @@ class UsersController extends Controller
         $h = $request->get('head');
         $t = $request->get('tail');
         $pathfinding = new Pathfinding();
+        $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
+            $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
 
         if ($h and $t) {
-            $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
-            $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
+            
 
             if($u1 and $u2) {
                 $users1=User::where('nickname', '=', $h)->orWhere('name', '=', $h)->get();
@@ -214,8 +215,9 @@ class UsersController extends Controller
                 }
             }
         }
-        $lno = $pathfinding->pathList;
-        return view('users.bfs', compact('users', 'user', 'u1', 'u2', 'lno', 'users1', 'users2'));
+        $checkRoot = $this->root;
+        $trackResult = $pathfinding->pathList;
+        return view('users.bfs', compact('users', 'user', 'u1', 'u2', 'trackResult', 'checkRoot', 'users1', 'users2'));
     }
 
     public function searchRoot(User $user){

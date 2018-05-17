@@ -33,7 +33,7 @@ return [
     'edit'              => 'Ngarobah',
     'update'            => 'Ngaropéa',
     'show_profile'      => 'Profil',
-    'show_family_chart' => 'Bagan Kulawarga',
+    'show_family_chart' => 'Skema Kulawarga',
     'show_family_tree'  => 'Pancakaki',
     'enter_new_name'    => 'Lebetkeun Nami Anyar...',
     'select_from_existing_males'   => 'Milih tina Pameget na daptar',
