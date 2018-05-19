@@ -7,6 +7,4 @@
     {{ link_to_route('users.chart', trans('app.show_family_chart'), [$user->id], ['class' => Request::segment(3) == 'chart' ? 'btn btn-default active' : 'btn btn-default']) }}
     {{ link_to_route('users.bfs', trans('app.relationship_calculator'), [$user->id], ['class' => Request::segment(3) == 'bfs' ? 'btn btn-default active' : 'btn btn-default']) }}
     {{ link_to_route('users.search', trans('app.search_your_family'), [$user->id], ['class' => Request::segment(3) == 'search' ? 'btn btn-default active' : 'btn btn-default']) }}
-
-    {{-- link_to_route('users.marriages', trans('app.show_marriages'), [$user->id], ['class' => Request::segment(3) == 'marriages' ? 'btn btn-default active' : 'btn btn-default']) --}}
 </div>

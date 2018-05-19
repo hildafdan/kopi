@@ -132,12 +132,4 @@ class FamilyActionsController extends Controller
 
         return back();
     }
-
-    public function setParent(Request $request, User $user)
-    {
-        $user->parent_id = $request->get('set_parent_id');
-        $user->save();
-
-        return redirect()->route('users.show', $user->id);
-    }
 }

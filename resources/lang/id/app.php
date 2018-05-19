@@ -16,6 +16,7 @@ return [
     'grand_child_count' => 'Jumlah Cucu',
     'user_found'        => 'User ditemukan : <strong>:total Orang</strong> untuk kata kunci : <strong>:keyword</strong>',
     'user_relation'     => 'User tidak ditemukan atau tidak dalam graf yang sama',
+    'time_process'      => 'Hubungan ditemukan dalam waktu : <strong>:waktu</strong> detik',
     'search_your_family' => 'Pencarian',
     'relationship_calculator' => 'Kalkulator Hubungan',
     'relationship_calculator_node1' => 'Masukan nama/panggilan yang menjadi node awal',

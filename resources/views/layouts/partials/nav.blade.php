@@ -17,12 +17,6 @@
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
-            {{-- <ul class="nav navbar-nav">
-                <li><a href="{{ route('users.search') }}">{{ trans('app.search_your_family') }}</a></li>
-                <li><a href="{{ route('users.bfs') }}">{{ trans('app.relationship_calculator') }}</a></li>
-            </ul> --}}
-
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
@@ -39,7 +33,6 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            {{-- <li><a href="{{ route('backups.index') }}">{{ trans('backup.list') }}</a></li> --}}
                             <li><a href="{{ route('profile') }}">{{ trans('app.my_profile') }}</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"

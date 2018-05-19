@@ -16,6 +16,7 @@ return [
     'grand_child_count' => 'Jumlah Incu',
     'user_found'        => 'Pamaké kapendak : <strong>:total Jalmi</strong> pikeun kecap konci : <strong>:keyword</strong>',
     'user_relation'     => 'Pamaké teu kapendak atawa teu dina grap nu sami',
+    'time_process'      => 'Hubungan kapendak dina waktu : <strong>:waktu</strong> detik',
     'search_your_family' => 'Pilarian Kulawarga',
     'relationship_calculator' => 'Ngitung Hubungan',
     'relationship_calculator_node1' => 'Lebetkeun nami/nénéhan anu jadi node awal',
