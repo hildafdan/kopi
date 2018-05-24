@@ -10,6 +10,7 @@ class Node
     public $listNeighbors = [];
     public $heuristic = 0;
     public $prev;
+    public $status = "";
 
     public function setId (int $id, int $level, string $name){
         $this->id = $id;

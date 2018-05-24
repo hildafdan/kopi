@@ -34,6 +34,13 @@
 			<span class="label" >
 				<font color="grey">{{$value->name}}</font>
 			</span>
+			<div class="branch lv1">
+				<div class="entry {{$value->status}}">
+					<span class="label" >
+						<font color="grey">{{$value->status}}</font>
+					</span>
+				</div>
+			</div>
 		</div>
 		@endforeach
 	</div>

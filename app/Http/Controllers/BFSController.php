@@ -47,6 +47,7 @@ class BFSController extends Controller
                     $this->defineNeighbor();
                     $this->getHeuristic();
                     $this->bfs($this->start, $this->target);
+                    $this->trackStatus();
                 }
             }
         }
@@ -273,6 +274,133 @@ class BFSController extends Controller
 
         while ($temp->prev != null) {
             $this->pathList = array_prepend($this->pathList, $temp->prev);
+            $temp = $temp->prev;
+        }
+    }
+
+    public function trackStatus () {
+        $temp = $this->target;
+        $rootPassed = false;
+        while ($temp->prev != null) {
+            if (!$rootPassed) {
+                if ($this->target->level > $temp->prev->level) {
+                    if ($this->target->level - $temp->prev->level == 1) {
+                        $temp->prev->status = trans('status.ayah/ibu');
+                    }
+                    else if ($this->target->level - $temp->prev->level == 2) {
+                        $temp->prev->status = trans('status.kakek/nenek');
+                    }
+                    else if ($this->target->level - $temp->prev->level == 3) {
+                        $temp->prev->status = trans('status.buyut');  
+                    }
+                    else if ($this->target->level - $temp->prev->level == 4) {
+                        $temp->prev->status = trans('status.bao');  
+                    }
+                    else if ($this->target->level - $temp->prev->level == 5) {
+                        $temp->prev->status = trans('status.janggawareng');  
+                    }
+                    else if ($this->target->level - $temp->prev->level == 6) {
+                        $temp->prev->status = trans('status.udeg-udeg');  
+                    }
+                    else if ($this->target->level - $temp->prev->level == 7) {
+                        $temp->prev->status = trans('status.kakaitsiwur');  
+                    }
+                    else {
+                        $temp->prev->status = trans('status.sesepuh');  
+                    }
+                }
+                else if ($this->target->level < $temp->prev->level) {
+                    if ($temp->prev->level - $this->target->level == 1) {
+                        $temp->prev->status = trans('status.anak');
+                    }
+                    else if ($temp->prev->level - $this->target->level == 2) {
+                        $temp->prev->status = trans('status.cucu');
+                    }
+                    else if ($temp->prev->level - $this->target->level == 3) {
+                        $temp->prev->status = trans('status.buyut'); 
+                    }
+                    else if ($temp->prev->level - $this->target->level == 4) {
+                        $temp->prev->status = trans('status.bao'); 
+                    }
+                    else if ($temp->prev->level - $this->target->level == 5) {
+                        $temp->prev->status = trans('status.janggawareng');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 6) {
+                        $temp->prev->status = trans('status.udeg-udeg');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 7) {
+                        $temp->prev->status = trans('status.kakaitsiwur'); 
+                    }
+                    else {
+                        $temp->prev->status = trans('status.turunan');  
+                    }
+                }   
+            }
+            else{
+                if ($this->target->level == $temp->prev->level) {
+                    if($temp->prev->heuristic == 2){
+                        $temp->prev->status = trans('status.kakak/adik');
+                    }
+                    else {
+                        $temp->prev->status = trans('status.sepupu') ;
+                    }
+                }
+                else if ($this->target->level > $temp->prev->level) {
+                    if ($this->target->level - $temp->prev->level == 1) {
+                        $temp->prev->status = trans('status.om/tante');
+                    }
+                    else if ($this->target->level - $temp->prev->level == 2) {
+                        $temp->prev->status = trans('status.kakek/nenek2'); 
+                    }
+                    else if ($this->target->level - $temp->prev->level == 3) {
+                        $temp->prev->status = trans('status.buyut2');  
+                    }
+                    else if ($this->target->level - $temp->prev->level == 4) {
+                        $temp->prev->status = trans('status.bao2'); 
+                    }
+                    else if ($this->target->level - $temp->prev->level == 5) {
+                        $temp->prev->status = trans('status.janggawareng2'); 
+                    }
+                    else if ($this->target->level - $temp->prev->level == 6) {
+                        $temp->prev->status = trans('status.udeg-udeg2'); 
+                    }
+                    else if ($this->target->level - $temp->prev->level == 7) {
+                        $temp->prev->status = trans('status.kakaitsiwur2'); 
+                    }
+                    else {
+                        $temp->prev->status = trans('status.sesepuh');
+                    }
+                }
+                else if ($this->target->level < $temp->prev->level) {
+                    if ($temp->prev->level - $this->target->level == 1) {
+                        $temp->prev->status = trans('status.keponakan');
+                    }
+                    else if ($temp->prev->level - $this->target->level == 2) {
+                        $temp->prev->status = trans('status.cucu2');
+                    }
+                    else if ($temp->prev->level - $this->target->level == 3) {
+                        $temp->prev->status = trans('status.buyut2');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 4) {
+                        $temp->prev->status = trans('status.bao2');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 5) {
+                        $temp->prev->status = trans('status.janggawareng2');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 6) {
+                        $temp->prev->status = trans('status.udeg-udeg2');  
+                    }
+                    else if ($temp->prev->level - $this->target->level == 7) {
+                        $temp->prev->status = trans('status.kakaitsiwur2');  
+                    }
+                    else  {
+                        $temp->prev->status = trans('status.turunan'); 
+                    }
+                }   
+            }
+            if ($temp->prev->level == 0) {
+                $rootPassed = true;
+            }
             $temp = $temp->prev;
         }
     }
