@@ -14,6 +14,8 @@ class BFSController extends Controller
     public $listFamily2=[];
     public $root;
     public $listUser=[];
+    public $listWife=[];
+    public $listHusband=[];
 
     //BFSProcess
     public $listNode=[];
@@ -29,25 +31,34 @@ class BFSController extends Controller
         $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
         $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
 		$begin = microtime(true);
+        if ($h and $t) {   
+            if ($h != $t){
+                if($u1 and $u2) {
+                    $users1=User::where('nickname', '=', $h)->orWhere('name', '=', $h)->get();
+                    $users2=User::where('nickname', '=', $t)->orWhere('name', '=', $t)->get();
+                    
+                    $this->searchRoot($users1[0]);
+                    $this->head = $users1[0];
+                    // echo $users1[0]->name;
+                    
+                    // echo $this->listFamily1;
 
-        if ($h and $t) {
-            if($u1 and $u2) {
-                $users1=User::where('nickname', '=', $h)->orWhere('name', '=', $h)->get();
-                $users2=User::where('nickname', '=', $t)->orWhere('name', '=', $t)->get();
-                
-                $this->searchRoot($users1[0]);
-                $this->head = $users1[0];
-                $this->searchRoot2($users2[0]);
-                $this->tail=$users2[0];
-                $this->matchRoot();
-                
-                if($this->root != null) {
-                    $this->buildGraph($this->root, 0);
-                    $this->defineGraph();   
-                    $this->defineNeighbor();
-                    $this->getHeuristic();
-                    $this->bfs($this->start, $this->target);
-                    $this->trackStatus();
+                    $this->searchRoot2($users2[0]);
+                    $this->tail=$users2[0];
+                    // echo $this->listFamily2;
+
+                    $this->matchRoot();
+                    // echo $this->root->name;
+
+                    if($this->root != null) {
+                        $this->buildGraph($this->root, 0);
+
+                        $this->defineGraph();   
+                        $this->defineNeighbor();
+                        $this->getHeuristic();
+                        $this->bfs($this->start, $this->target);
+                        $this->trackStatus();
+                    }
                 }
             }
         }
@@ -95,16 +106,33 @@ class BFSController extends Controller
                 }
             }
         }
+
     }
 
     public function buildGraph(User $user, int $level)
     {
         $user->level = $level;
         $this->listUser = array_prepend($this->listUser, $user);
-        if ($user->childs->count() > 0){
-            $level++;
-            foreach($user->childs as $child){
-                $this->buildGraph($child, $level);
+        if ($this->root->id == $this->tail->id or $this->root->id == $this->head->id) {
+            if ($user->childs->count() > 0){
+                $level++;
+                foreach($user->childs as $child){
+                    $this->buildGraph($child, $level);
+                }
+            }
+        }
+        else {
+            if($user->name != $this->head->name){
+                if($user->name != $this->tail->name) {
+                    if ($user->childs->count() > 0){
+                        $level++;
+                        foreach($user->childs as $child){
+                            if($child->mother_id != $this->head->id && $child->mother_id != $this->tail->id)
+                                if($child->father_id != $this->head->id && $child->father_id != $this->tail->id)
+                                    $this->buildGraph($child, $level);
+                        }
+                    }
+                 }
             }
         }
     }
@@ -198,6 +226,7 @@ class BFSController extends Controller
             $big = $end;
             $small = $current;            
         }
+        // echo $big->name.",".$small->name;
 
         $rootNode = new Node();
         $level = $big->level;
@@ -222,6 +251,7 @@ class BFSController extends Controller
             }
         }
         $current->heuristic = ($current->level) - ($rootNode->level) + ($end->level) - ($rootNode->level);
+        // echo $rootNode->level.",".$current->name.",".$end->name."=".$current->heuristic."<br>";
     }
 
     public function bfs (Node $s, Node $t) 
@@ -276,6 +306,7 @@ class BFSController extends Controller
             $this->pathList = array_prepend($this->pathList, $temp->prev);
             $temp = $temp->prev;
         }
+
     }
 
     public function trackStatus () {
@@ -297,7 +328,8 @@ class BFSController extends Controller
                         $temp->prev->status = trans('status.bao');  
                     }
                     else if ($this->target->level - $temp->prev->level == 5) {
-                        $temp->prev->status = trans('status.janggawareng');  
+                        $temp->prev->status = trans('status.janggawareng'); 
+                        // $rootPassed = true; 
                     }
                     else if ($this->target->level - $temp->prev->level == 6) {
                         $temp->prev->status = trans('status.udeg-udeg');  
@@ -334,7 +366,8 @@ class BFSController extends Controller
                     else {
                         $temp->prev->status = trans('status.turunan');  
                     }
-                }   
+                }
+                else $rootPassed = true;   
             }
             else{
                 if ($this->target->level == $temp->prev->level) {
