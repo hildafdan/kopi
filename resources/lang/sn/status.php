@@ -2,32 +2,41 @@
 
 return [
     // vertikal ke atas
-    'ayah/ibu'			=> 'Bapa/Indung',
-    'kakek/nenek'		=> 'Aki/Nini',
+    'ayah'			    => 'Bapa',
+    'ibu'               => 'Indung',
+    'kakek'		        => 'Aki',
+    'nenek'             => 'Nini',
     'buyut'				=> 'Uyut',
     'bao'				=> 'Bao',
     'janggawareng'		=> 'Janggawaréng',
     'udeg-udeg'			=> 'Udeg-udeg',
     'kakaitsiwur'		=> 'Kakaitsiwur',
-    'sesepuh'			=> 'Sesepuh',
+    'sesepuh'			=> 'Karuhun',
 
     //vertikal ke bawah
     'anak'				=> 'Anak',
     'cucu'				=> 'Incu',
-    'buyut2'            => 'Buyut',
+    'cicit'             => 'Buyut',
     'turunan'			=> 'Turunan',
 
     //horizontal
     'kakak/adik'        => 'Lanceuk/Adi',
     'sepupu'			=> 'Kapilanceuk/Kapiadi',
-    'om/tante'			=> 'Uwa/Mamang/Bibi',
-    'kakek/nenek2'		=> 'Aki/Nini ti gigir',
-    'buyut2'			=> 'Buyut ti gigir',
+    'om/paman'			=> 'Uwa/Mamang',
+    'tante/bibi'        => 'Uwa/Bibi',
+    'kakek2'		    => 'Aki ti gigir',
+    'nenek2'            => 'Nini ti gigir',
+    'buyut2'			=> 'Uyut ti gigir',
     'bao2'				=> 'Bao ti gigir',
     'janggawareng2'		=> 'Janggawaréng ti gigir',
     'udeg-udeg2'		=> 'Udeg-udeg ti gigir',
     'kakaitsiwur2'		=> 'Kakaitsiwur ti gigir',
 
     'keponakan'			=> 'Alo',
-    'cucu2'				=> 'Incu ti gigir',
+    'cucu3'				=> 'Incu ti gigir',
+    'cicit3'            => 'Buyut ti gigir',
+    'bao3'              => 'Bao ti gigir',
+    'janggawareng3'     => 'Janggawaréng ti gigir',
+    'udeg-udeg3'        => 'Udeg-udeg ti gigir',
+    'kakaitsiwur3'      => 'Kakaitsiwur ti gigir',
 ];

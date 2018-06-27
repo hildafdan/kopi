@@ -8,14 +8,12 @@ use Illuminate\Http\Request;
 
 class BFSController extends Controller
 {
-	public $head;
+    public $head;
     public $tail;
     public $listFamily1=[];
     public $listFamily2=[];
     public $root;
     public $listUser=[];
-    public $listWife=[];
-    public $listHusband=[];
 
     //BFSProcess
     public $listNode=[];
@@ -24,13 +22,16 @@ class BFSController extends Controller
     public $pathList = [];
     public $isSearching = true;
 
+    //Temporario
+    public $tempRoot;
+
     public function index(Request $request, User $user)
     {
         $h = $request->get('head');
         $t = $request->get('tail');
         $u1=User::where('nickname', $h)->orWhere('name', $h)->exists();
         $u2=User::where('nickname', $t)->orWhere('name', $t)->exists();
-		$begin = microtime(true);
+        $begin = microtime(true);
         if ($h and $t) {   
             if ($h != $t){
                 if($u1 and $u2) {
@@ -62,7 +63,7 @@ class BFSController extends Controller
                 }
             }
         }
-		$finish = microtime(true);
+        $finish = microtime(true);
         $totaltime = $finish - $begin;
         $totaltime_format = number_format($totaltime,3);
 
@@ -143,7 +144,7 @@ class BFSController extends Controller
             $this->listNode = array_prepend($this->listNode, new Node());
         }
         for ($i = 0; $i < count($this->listUser); $i++){   
-            $this->listNode[$i]->setId($this->listUser[$i]->id, $this->listUser[$i]->level, $this->listUser[$i]->name);
+            $this->listNode[$i]->setNode($this->listUser[$i]->id, $this->listUser[$i]->level, $this->listUser[$i]->name, $this->listUser[$i]->gender_id);
         }
     }
 
@@ -252,6 +253,11 @@ class BFSController extends Controller
         }
         $current->heuristic = ($current->level) - ($rootNode->level) + ($end->level) - ($rootNode->level);
         // echo $rootNode->level.",".$current->name.",".$end->name."=".$current->heuristic."<br>";
+
+        
+        if ($current->id == $this->head->id && $end->id == $this->tail->id){
+            $this->tempRoot = $rootNode;
+        }
     }
 
     public function bfs (Node $s, Node $t) 
@@ -316,10 +322,16 @@ class BFSController extends Controller
             if (!$rootPassed) {
                 if ($this->target->level > $temp->prev->level) {
                     if ($this->target->level - $temp->prev->level == 1) {
-                        $temp->prev->status = trans('status.ayah/ibu');
+                        if($temp->prev->gender_id == 1)
+                            $temp->prev->status = trans('status.ayah');
+                        else
+                            $temp->prev->status = trans('status.ibu');
                     }
                     else if ($this->target->level - $temp->prev->level == 2) {
-                        $temp->prev->status = trans('status.kakek/nenek');
+                        if($temp->prev->gender_id == 1)
+                            $temp->prev->status = trans('status.kakek');
+                        else
+                            $temp->prev->status = trans('status.nenek');
                     }
                     else if ($this->target->level - $temp->prev->level == 3) {
                         $temp->prev->status = trans('status.buyut');  
@@ -349,7 +361,7 @@ class BFSController extends Controller
                         $temp->prev->status = trans('status.cucu');
                     }
                     else if ($temp->prev->level - $this->target->level == 3) {
-                        $temp->prev->status = trans('status.buyut'); 
+                        $temp->prev->status = trans('status.cicit'); 
                     }
                     else if ($temp->prev->level - $this->target->level == 4) {
                         $temp->prev->status = trans('status.bao'); 
@@ -380,10 +392,16 @@ class BFSController extends Controller
                 }
                 else if ($this->target->level > $temp->prev->level) {
                     if ($this->target->level - $temp->prev->level == 1) {
-                        $temp->prev->status = trans('status.om/tante');
+                        if($temp->prev->gender_id == 1)
+                            $temp->prev->status = trans('status.om/paman');
+                        else
+                            $temp->prev->status = trans('status.tante/bibi');
                     }
                     else if ($this->target->level - $temp->prev->level == 2) {
-                        $temp->prev->status = trans('status.kakek/nenek2'); 
+                        if($temp->prev->gender_id == 1)
+                            $temp->prev->status = trans('status.kakek2');
+                        else
+                            $temp->prev->status = trans('status.nenek2');
                     }
                     else if ($this->target->level - $temp->prev->level == 3) {
                         $temp->prev->status = trans('status.buyut2');  
@@ -409,29 +427,29 @@ class BFSController extends Controller
                         $temp->prev->status = trans('status.keponakan');
                     }
                     else if ($temp->prev->level - $this->target->level == 2) {
-                        $temp->prev->status = trans('status.cucu2');
+                        $temp->prev->status = trans('status.cucu3');
                     }
                     else if ($temp->prev->level - $this->target->level == 3) {
-                        $temp->prev->status = trans('status.buyut2');  
+                        $temp->prev->status = trans('status.cicit3');  
                     }
                     else if ($temp->prev->level - $this->target->level == 4) {
-                        $temp->prev->status = trans('status.bao2');  
+                        $temp->prev->status = trans('status.bao3');  
                     }
                     else if ($temp->prev->level - $this->target->level == 5) {
-                        $temp->prev->status = trans('status.janggawareng2');  
+                        $temp->prev->status = trans('status.janggawareng3');  
                     }
                     else if ($temp->prev->level - $this->target->level == 6) {
-                        $temp->prev->status = trans('status.udeg-udeg2');  
+                        $temp->prev->status = trans('status.udeg-udeg3');  
                     }
                     else if ($temp->prev->level - $this->target->level == 7) {
-                        $temp->prev->status = trans('status.kakaitsiwur2');  
+                        $temp->prev->status = trans('status.kakaitsiwur3');  
                     }
                     else  {
                         $temp->prev->status = trans('status.turunan'); 
                     }
                 }   
             }
-            if ($temp->prev->level == 0) {
+            if ($temp->prev->level == $this->tempRoot->level) {
                 $rootPassed = true;
             }
             $temp = $temp->prev;

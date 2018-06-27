@@ -79,16 +79,16 @@ $ggccTotal = 0;
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $grandChildsTotal }}</strong></div>
     @endif
     @if ($ggTotal)
-    <div class="col-md-1 text-right">Jumlah Cicit</div>
+    <div class="col-md-1 text-right">Jumlah {{ trans('status.cicit') }}</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $ggTotal }}</strong></div>
     @endif
     @if ($ggcTotal)
-    <div class="col-md-1 text-right">Jumlah Bao</div>
+    <div class="col-md-1 text-right">Jumlah {{ trans('status.bao') }}</div>
     <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $ggcTotal }}</strong></div>
     @endif
     @if ($ggccTotal)
-    <div class="col-md-1 text-right">Jumlah Canggahwareng</div>
-    <div class="col-md-1 text-left"><strong style="font-size:30px">{{ $ggccTotal }}</strong></div>
+    <div class="col-md-1 text-right"><font style="font-size:13px">Jumlah {{ trans('status.janggawareng') }}</font></div>
+    <div class="col-md-2 text-left"><strong style="font-size:30px">{{ $ggccTotal }}</strong></div>
     @endif
     <div class="col-md-1">&nbsp;</div>
 </div>

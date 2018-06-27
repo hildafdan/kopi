@@ -20,6 +20,10 @@ return [
     'login'                     => 'Login',
     'logout'                    => 'Keluar',
     'register'                  => 'Buat Akun Baru',
+    'remember_me'               => 'Ingat Saya',
+    'email_address'             => 'Alamat Email',
+    'confirm_password'          => 'Konfirmasi Password',
+    'send_link'                 => 'Kirim Tautan Reset Password',
     'have_an_account'           => 'Saya sudah punya Akun',
     'need_account'              => 'Belum punya Akun?',
     'change_password'           => 'Ganti Password',
@@ -29,5 +33,5 @@ return [
     'old_password'              => 'Password Lama',
     'new_password'              => 'Password Baru',
     'new_password_confirmation' => 'Ulangi Password Baru',
-    'send_reset_password_link'  => 'Kirim Link Reset Password',
+    'send_reset_password_link'  => 'Kirim Tautan Reset Password',
 ];

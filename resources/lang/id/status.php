@@ -2,8 +2,10 @@
 
 return [
     // vertikal ke atas
-    'ayah/ibu'			=> 'Ayah/Ibu',
-    'kakek/nenek'		=> 'Kakek/Nenek',
+    'ayah'	 	       	=> 'Ayah',
+    'ibu'               => 'Ibu',
+    'kakek'		        => 'Kakek',
+    'nenek'             => 'Nenek',
     'buyut'				=> 'Buyut',
     'bao'				=> 'Bao',
     'janggawareng'		=> 'Canggahwareng',
@@ -14,14 +16,16 @@ return [
     //vertikal ke bawah
     'anak'				=> 'Anak',
     'cucu'				=> 'Cucu',
-    'buyut2'			=> 'Cicit',
+    'cicit'		       	=> 'Cicit',
     'turunan'			=> 'Turunan',
 
     //horizontal
     'kakak/adik'        => 'Kakak/Adik',
     'sepupu'			=> 'Sepupu',
-    'om/tante'			=> 'Om/Paman/Tante/Bibi',
-    'kakek/nenek2'		=> 'Saudara Kakek/Nenek',
+    'om/paman'			=> 'Om/Paman',
+    'tante/bibi'        => 'Tante/Bibi',
+    'kakek2'		    => 'Saudara Kakek/Nenek',
+    'nenek2'            => 'Saudara Kakek/Nenek',
     'buyut2'			=> 'Saudara Buyut',
     'bao2'				=> 'Saudara Bao',
     'janggawareng2'		=> 'Saudara Canggahwareng',
@@ -29,5 +33,10 @@ return [
     'kakaitsiwur2'		=> 'Saudara Kakaitsiwur',
 
     'keponakan'			=> 'Keponakan',
-    'cucu2'				=> 'Cucu Saudara',
+    'cucu3'				=> 'Cucu Saudara',
+    'cicit3'            => 'Cicit Saudara',
+    'bao3'              => 'Bao Saudara',
+    'janggawareng3'     => 'Canggahwareng Saudara',
+    'udeg-udeg3'        => 'Udeg-udeg Saudara',
+    'kakaitsiwur3'      => 'Kakaitsiwur Saudara',
 ];

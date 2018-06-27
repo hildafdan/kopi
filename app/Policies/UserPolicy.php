@@ -13,4 +13,8 @@ class UserPolicy
     {
         return $editableUser->id == $user->id || $editableUser->manager_id == $user->id;
     }
+    public function delete(User $user, User $editableUser)
+    {
+        return $editableUser->manager_id == $user->id && $editableUser->id != $user->id;
+    }
 }

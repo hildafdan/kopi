@@ -24,25 +24,27 @@
 		</h2>
 	@else
 	<h2>
-		    <small class="pull-right">{!! trans('app.time_process', ['waktu' => $totaltime_format]) !!}</small>
+		    <small class="pull-right">{!! trans('app.time_process', ['path' => count($trackResult)-1, 'waktu' => $totaltime_format]) !!}</small>
 	</h2>
 	@endif
 	<br>
 	<div id="wrapper">
-		@foreach($trackResult as $value)
-		<div class="entry {{$value->name}}">
-			<span class="label" >
-				<font color="grey">{{$value->name}}</font>
-			</span>
-			<div class="branch lv1">
-				<div class="entry {{$value->status}}">
-					<span class="label" >
-						<font color="grey">{{$value->status}}</font>
-					</span>
-				</div>
+		@for($i=0; $i<count($trackResult); $i++)
+			<div class="entry {{$trackResult[$i]->name}}">
+				<span class="label" >
+					@if($i==count($trackResult)-1)
+						<font color="black" ><i>{{$trackResult[$i]->name}}</i></font>
+					@else
+						<font color="grey">{{$trackResult[$i]->name}}</font>
+					@endif
+				</span>
+				@if($i!=count($trackResult)-1)
+					<div class="branch" >
+						<font color="grey" size="2px">{{$trackResult[$i]->status}}</font>
+					</div>
+				@endif
 			</div>
-		</div>
-		@endforeach
+		@endfor
 	</div>
 @endif
 

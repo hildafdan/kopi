@@ -160,7 +160,21 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $this->authorize('delete', $user);
+
+        request()->validate([
+            'user_id' => 'required',
+        ]);
+
+        // if($user->id == $couple->husband_id or $user->id == $couple->wife_id) {
+        //     Couples::destroy($couple_id);
+        // }
+
+        if (request('user_id') == $user->id && $user->delete()) {
+            return redirect()->route('users.search');
+        }
+
+        return back();
     }
 
     

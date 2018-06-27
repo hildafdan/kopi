@@ -30,5 +30,6 @@ Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('users/{user}', 'UsersController@update')->name('users.update');
 Route::get('users/{user}/chart', 'UsersController@chart')->name('users.chart');
 Route::get('users/{user}/tree', 'UsersController@tree')->name('users.tree');
+Route::delete('users/{user}', 'UsersController@destroy')->name('users.destroy');
 
 Route::get('users/{user}/bfs', 'BFSController@index')->name('users.bfs');

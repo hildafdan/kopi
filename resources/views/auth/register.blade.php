@@ -18,7 +18,7 @@
 
                                 @if ($errors->has('nickname'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('nickname') }}</strong>
+                                        <strong>{{ $errors->first('nickname') is_numeric('nickname')}}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -30,7 +30,7 @@
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('name') or is_numeric('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
                                     </span>

@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+@if (request('action') == 'delete' && $user)
+   @can('delete', $user)
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">{{ __('user.delete') }} : {{ $user->name }}</h3></div>
+                    <div class="panel-body">
+                            {!! FormField::delete(
+                                ['route' => ['users.destroy', $user]],
+                                __('user.delete_confirm_button'),
+                                ['class' => 'btn btn-danger'],
+                                ['user_id' => $user->id]
+                            ) !!}
+                            {{ link_to_route('users.edit', __('app.cancel'), [$user], ['class' => 'btn btn-default']) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endcan
+@else
     <h2 class="page-header">
         <div class="pull-right">
             {{ link_to_route('users.show', trans('app.show_profile').' '.$user->name, [$user->id], ['class' => 'btn btn-default']) }}
@@ -49,4 +69,8 @@
         {{ link_to_route('users.show', trans('app.cancel'), [$user->id], ['class' => 'btn btn-default']) }}
     </div>
     {{ Form::close() }}
+    @can('delete', $user)
+        {{ link_to_route('users.edit', __('user.delete'), [$user, 'action' => 'delete'], ['class' => 'btn btn-danger pull-right', 'id' => 'del-user-'.$user->id]) }}
+    @endcan
+    @endif
 @endsection

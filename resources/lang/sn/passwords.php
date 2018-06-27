@@ -13,10 +13,10 @@ return [
     |
     */
 
-    "password"  => "Password sahenteuna kedah genep karakter tur cocok jeung konfirmasi.",
-    "reset"     => "Password Anjeun atos direset!",
-    "sent"      => "Email atos dikirim anu eusina tautan pikeun ngareset Password Anjeun!",
+    "password"  => "Password sahenteuna kudu genep karakter tur cocok jeung konfirmasi.",
+    "reset"     => "Password Manéh geus direset!",
+    "sent"      => "Email geus dikirim anu eusina tautan pikeun ngareset Password Manéh!",
     "token"     => "Token Reset Password teu sah.",
-    "user"      => "Pamaké email eta teu kapanggih.",
+    "user"      => "Pamaké email éta teu kapanggih.",
 
 ];

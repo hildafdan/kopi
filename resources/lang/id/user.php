@@ -45,4 +45,9 @@ return [
     'city'     => 'Kota',
     'phone'    => 'Telp.',
     'manager'  => 'Pengelola',
+    
+    // Deletion confirm attributes
+    'delete'                => 'Hapus User',
+    'delete_confirm'        => 'Anda yakin akan menghapus user ini?',
+    'delete_confirm_button' => 'Saya yakin hapus user ini',
 ];

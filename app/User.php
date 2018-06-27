@@ -184,4 +184,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class);
     }
+
+    public function managedUsers()
+    {
+        return $this->hasMany(User::class, 'manager_id');
+    }
 }
