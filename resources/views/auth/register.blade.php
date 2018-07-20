@@ -18,7 +18,7 @@
 
                                 @if ($errors->has('nickname'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('nickname') is_numeric('nickname')}}</strong>
+                                        <strong>{{ $errors->first('nickname') }}</strong>
                                     </span>
                                 @endif
                             </div>
